@@ -1,0 +1,129 @@
+Creating the user---------------------------------------------
+CREATE USER MMS_HR IDENTIFIED BY mms_hr_pass
+GRANT CREATE SESSION, CREATE VIEW, ALTER SESSION, CREATE SEQUENCE, RESOURCE TO MMS_HR
+GRANT UNLIMITED TABLESPACE TO MMS_HR;
+
+
+Suggested mapping of the tables:"-----------------------------
+1. Supplier:
+supplier_id , supplier_name , phone_number , email
+
+2. item: 
+item_id , item_name , category , item_cost , supplier_id , item_image , barcode , location
+
+3. inventory: 
+item_id , expiry_date , quantity
+
+4. pricelist:
+pl_id , event
+
+5. middle table pricelist_item:
+pl_id , item_id , price
+
+6. sales order:
+so_id , so_date , sales_amount , net_amount , discount , tax
+
+7. sales order details:
+item_id , so_id , item_cost , price , pl_id , quantity , tax , discount , details  
+
+
+
+DDL STATEMENTS   -----------------------------------------------------------
+
+create table supplier
+(supplier_id INTEGER, 
+supplier_name varchar2(30),
+phone_number char(10),
+email varchar2(50)
+);
+
+create table item
+(item_id integer,
+item_name varchar2(20),
+category varchar2(20),
+item_cost number(10,3),
+supplier_id integer ,
+item_image varchar2(50),
+barcode varchar2(15),
+location varchar2(30)
+);
+
+alter table supplier
+add constraint pk_supplier primary key(supplier_id);
+
+alter table item
+add constraint pk_item primary key(item_id);
+
+create table inventory
+(item_id integer,
+expiry_date date,
+quantity integer
+);
+
+alter table inventory
+add constraint pk_inventory primary key(item_id , expiry_date)
+
+create table pricelist 
+(pl_id integer,
+event varchar2(30)
+);
+
+alter table pricelist 
+add constraint pk_pricelist primary key(pl_id);
+
+create table pricelist_item
+(pl_id integer,
+item_id integer,
+price number(10,3)
+);
+
+alter table pricelist_item
+add constraint pk_pl_item primary key(pl_id , item_id)
+
+create table sales_order (
+so_id integer,
+so_date date,
+sales_amount integer,
+net_amount number(10,3),
+discount number(10,3),
+tax  number(10,3)
+);
+
+alter table sales_order
+add constraint pk_sales_order primary key(so_id)
+
+create table sales_order_details (
+item_id integer,
+so_id integer,
+item_cost number(10,3),
+price number(10,3),
+pl_id integer,
+quantity integer,
+tax number(10,3),
+discount number(10,3) ,
+details varchar2(50)
+);
+
+alter table sales_order_details
+add constraint pk_sod primary key(so_id , item_id);
+
+alter table item
+add constraint fk_item_supplier foreign key(supplier_id) references supplier(supplier_id) on delete cascade
+
+alter table inventory
+add constraint fk_inventory_item foreign key(item_id) references item(item_id) on delete cascade
+
+alter table pricelist_item
+add constraint fk_pricelist_middle foreign key(pl_id) references pricelist(pl_id) on delete cascade
+
+alter table pricelist_item
+add constraint fk_item_middle foreign key(item_id) references item(item_id) on delete cascade
+
+alter table sales_order_details
+add constraint fk_sod_item foreign key(item_id) references item(item_id) on delete cascade
+
+alter table sales_order_details
+add constraint fk_sod_so foreign key(so_id) references sales_order(so_id) on delete cascade
+
+alter table sales_order_details
+add constraint fk_sod_pl foreign key(pl_id) references pricelist(pl_id) on delete cascade
