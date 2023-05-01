@@ -1,1 +1,1 @@
-# db_point_of_sales_sys
+# Point of sales
