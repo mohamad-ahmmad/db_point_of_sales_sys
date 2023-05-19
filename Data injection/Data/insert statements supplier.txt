@@ -1,0 +1,10 @@
+INSERT INTO supplier values (1,'aaa','2559874','sup1@gmail.com');
+INSERT INTO supplier values (2,'aab','2559873','sup2@gmail.com');
+INSERT INTO supplier values (3,'aac','2559872','sup3@gmail.com');
+INSERT INTO supplier values (4,'aad','2559871','sup4@gmail.com');
+INSERT INTO supplier values (5,'aae','2559870','sup5@gmail.com');
+INSERT INTO supplier values (6,'aaf','2559869','sup6@gmail.com');
+INSERT INTO supplier values (7,'aag','2559868','sup7@gmail.com');
+INSERT INTO supplier values (8,'aar','2559867','sup8@gmail.com');
+INSERT INTO supplier values (9,'aas','2559866','sup9@gmail.com');
+INSERT INTO supplier values (10,'aaz','2559865','sup10@gmail.com');
