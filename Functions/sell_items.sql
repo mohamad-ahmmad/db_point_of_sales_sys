@@ -104,7 +104,7 @@ BEGIN
     sales_order_details_rec.price := item_profit_row.price;
     sales_order_details_rec.pl_id := item_profit_row.pl_id;
     sales_order_details_rec.quantity := item_obj.p_quantity;
-    sales_order_details_rec.tax := item_obj.p_item_tax;
+    sales_order_details_rec.tax := item_obj.p_item_tax * item_profit_row.price;
     sales_order_details_rec.discount := item_obj.p_item_discount;
 
     INSERT INTO sales_order_details
