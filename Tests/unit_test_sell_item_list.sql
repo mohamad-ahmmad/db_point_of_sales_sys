@@ -7,12 +7,12 @@ DECLARE
     CURSOR gathered_items IS
     SELECT 
     pl_i.item_id p_item_id,
-    (dbms_random.VALUE * 20) + 1 p_quantity,
+    floor(dbms_random.VALUE * 20) + 1 p_quantity,
     1 p_item_discount,
     0.1 p_item_tax,
     event p_event
     FROM 
-    pricelist_item pl_i INNER JOIN pricelist pl ON pl_i.pl_id = pl.pl_id;
+    pricelist_item pl_i INNER JOIN pricelist pl ON pl_i.pl_id = pl.pl_id WHERE ROWNUM <= 1000;
     
     item_row item_info := item_info(1,1,1,1,'hi');
     messages messages_type := messages_type();

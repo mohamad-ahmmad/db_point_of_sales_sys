@@ -12,6 +12,8 @@ BEGIN
     -- DEFINE A NEW RECORD OF SALES ORDER WITH A SEQ.NEXTVAL
     sales_order_rec.so_id := sales_order_seq.NEXTVAL;
 
+    INSERT INTO sales_order (so_id)
+    VALUES (sales_order_rec.so_id);
     -- LOOP OVER THE ARRAY IN THE PARAMTER    
     FOR i IN 1 .. item_arr.COUNT
     LOOP
@@ -56,6 +58,26 @@ BEGIN
         FROM sales_order_details
         WHERE so_id = sales_order_rec.so_id
     );
+    
+    UPDATE sales_order
+    SET so_date = sales_order_rec.so_date
+    WHERE so_id = sales_order_rec.so_id;
+    
+    UPDATE sales_order
+    SET sales_amount = sales_order_rec.sales_amount
+    WHERE so_id = sales_order_rec.so_id;
+    
+    UPDATE sales_order
+    SET net_amount = sales_order_rec.net_amount
+    WHERE so_id = sales_order_rec.so_id;
+    
+    UPDATE sales_order
+    SET discount = sales_order_rec.discount
+    WHERE so_id = sales_order_rec.so_id;
+    
+    UPDATE sales_order
+    SET tax = sales_order_rec.tax
+    WHERE so_id = sales_order_rec.so_id;
     
     RETURN messages;
     

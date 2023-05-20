@@ -96,7 +96,8 @@ BEGIN
         FROM item i
     ) i_cost
 
-    ON i_cost.item_id = pricelist_item.item_id;
+    ON i_cost.item_id = pricelist_item.item_id WHERE pricelist_item.item_id = item_obj.p_item_id 
+    AND rownum = 1;
 
     sales_order_details_rec.item_id := item_obj.p_item_id;
     sales_order_details_rec.so_id := p_sales_order_id;
